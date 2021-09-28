@@ -139,6 +139,10 @@ int Main( const AString & args )
         {
             WorkerSettings::Get().SetMinimumFreeMemoryMiB( options.m_MinimumFreeMemoryMiB );
         }
+        if ( !options.m_IPAddress.IsEmpty() )
+        {
+            WorkerSettings::Get().SetIPAddress( options.m_IPAddress );
+        }
         ret = worker.Work();
     }
 

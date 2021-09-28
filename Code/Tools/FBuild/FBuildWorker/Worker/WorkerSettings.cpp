@@ -30,6 +30,7 @@ WorkerSettings::WorkerSettings()
     , m_StartMinimized( false )
     , m_SettingsWriteTime( 0 )
     , m_MinimumFreeMemoryMiB( 1024 ) // 1 GiB
+    , m_IPAddress(  )
 {
     // half CPUs available to use by default
     uint32_t numCPUs = Env::GetNumProcessors();
@@ -78,6 +79,13 @@ void WorkerSettings::SetStartMinimized( bool startMinimized )
 void WorkerSettings::SetMinimumFreeMemoryMiB( uint32_t value )
 {
     m_MinimumFreeMemoryMiB = value;
+}
+
+// SetIPAddress
+//------------------------------------------------------------------------------
+void WorkerSettings::SetIPAddress( const AStackString<>& address )
+{
+    m_IPAddress = address;
 }
 
 // Load

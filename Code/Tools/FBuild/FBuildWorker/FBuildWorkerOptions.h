@@ -35,6 +35,7 @@ public:
     bool m_OverrideWorkMode;
     WorkerSettings::Mode m_WorkMode;
     uint32_t m_MinimumFreeMemoryMiB; // Minimum OS free memory including virtual memory to let worker do its work
+    AStackString<> m_IPAddress;      // IP Address to bind to
 
     // Console mode
     bool m_ConsoleMode;

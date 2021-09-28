@@ -31,6 +31,7 @@ FBuildWorkerOptions::FBuildWorkerOptions() :
     m_OverrideWorkMode( false ),
     m_WorkMode( WorkerSettings::WHEN_IDLE ),
     m_MinimumFreeMemoryMiB( 0 ),
+    m_IPAddress(  ),
     m_ConsoleMode( false )
 {
     #ifdef __LINUX__
@@ -114,6 +115,14 @@ bool FBuildWorkerOptions::ProcessCommandLine( const AString & commandLine )
             m_OverrideWorkMode = true;
             continue;
         }
+        else if ( token.BeginsWith( "-bindto=" ) )
+        {
+            char const* const ip = token.Get() + 8;
+            m_IPAddress = ip;
+            // TODO: Validate IP Address
+            continue;
+            // problem... fall through
+        }
         #if defined( __WINDOWS__ )
             else if ( token.BeginsWith( "-minfreememory=" ) )
             {
@@ -175,6 +184,8 @@ void FBuildWorkerOptions::ShowUsageError()
                        "        Set minimum free memory (MiB) required to accept work.\n"
                        " -nosubprocess\n"
                        "        (Windows) Don't spawn a sub-process worker copy.\n"
+                       " -bindto <IP Address>\n"
+                       "        Bind to the specified IP Address.\n"
                        "---------------------------------------------------------------------------\n"
                        ;
 

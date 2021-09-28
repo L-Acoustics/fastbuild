@@ -5,6 +5,7 @@
 // Includes
 //------------------------------------------------------------------------------
 #include "Core/Containers/Singleton.h"
+#include "Core/Strings/AStackString.h"
 
 // Forward Declarations
 //------------------------------------------------------------------------------
@@ -45,6 +46,9 @@ public:
     inline uint32_t GetMinimumFreeMemoryMiB() const { return m_MinimumFreeMemoryMiB; }
     void SetMinimumFreeMemoryMiB( uint32_t value );
 
+    inline const AStackString<>& GetIPAddress() const { return m_IPAddress; }
+    void SetIPAddress( const AStackString<>& address );
+
     void Load();
     void Save();
 
@@ -55,6 +59,7 @@ private:
     bool        m_StartMinimized;
     uint64_t    m_SettingsWriteTime;    // FileTime of settings when last changed/written to disk
     uint32_t    m_MinimumFreeMemoryMiB; // Minimum OS free memory including virtual memory to let worker do its work
+    AStackString<> m_IPAddress;         // IP Address to bind to
 };
 
 //------------------------------------------------------------------------------

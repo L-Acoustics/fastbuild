@@ -215,7 +215,7 @@ void WorkerBrokerage::SetAvailability( bool available )
         float elapsedTime = m_TimerLastUpdate.GetElapsed();
         if ( elapsedTime >= sBrokerageAvailabilityUpdateTime )
         {
-            // If settings have changed, (re)create the file 
+            // If settings have changed, (re)create the file
             // If settings have not changed, update the modification timestamp
             const WorkerSettings & workerSettings = WorkerSettings::Get();
             const uint64_t settingsWriteTime = workerSettings.GetSettingsWriteTime();
@@ -232,11 +232,16 @@ void WorkerBrokerage::SetAvailability( bool available )
                 Network::GetHostName( hostName );
                 Network::GetDomainName( domainName );
 
-                // Resolve host name to ip address
-                uint32_t ip = Network::GetHostIPFromName( hostName );
-                if ( ( ip != 0 ) && ( ip != 0x0100007f ) )
+                ipAddress = workerSettings.GetIPAddress();
+                // If IP Address was not forced
+                if ( ipAddress.IsEmpty() )
                 {
-                    TCPConnectionPool::GetAddressAsString( ip, ipAddress );
+                    // Resolve host name to ip address
+                    uint32_t ip = Network::GetHostIPFromName( hostName );
+                    if ((ip != 0) && (ip != 0x0100007f))
+                    {
+                        TCPConnectionPool::GetAddressAsString( ip, ipAddress );
+                    }
                 }
 
                 if ( ( hostName != m_HostName ) || ( domainName != m_DomainName ) || ( ipAddress != m_IPAddress ) )
